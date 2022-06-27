@@ -1,32 +1,29 @@
 const Events = require('../models/Events');
-const User = require('../models/Events');
 
-
-function postList(df) {
+function postList(cb) {
     Events.find().lean().exec(function (err, events) {
 
         if (err) {
-            df(err)
+            cb(err)
         } else {
-            df(null, events)
+            cb(null, events)
         }
     })
 };
 
-function userAdd(data, cb) {
-    
-    let newUser = new User(data);
-    newUser.save(function (err, event) {
+function eventAdd(data, cb, name) {
+    let newEvent = new Events(data);
+    newEvent.save(function (err, event) {
         if (err) {
             cb(err)
         } else {
             cb(null, event)
         }
-
     })
 };
+
 function postDelete(id, cb) {
-    Post.deleteOne({_id: id},function (err, event) {
+    Events.deleteOne({_id: id},function (err, event) {
         if (err) {
             cb(err);
         } else {
@@ -38,6 +35,6 @@ function postDelete(id, cb) {
 
 module.exports = {
     list: postList,
-    add: userAdd,
+    add: eventAdd,
     delete: postDelete
 }

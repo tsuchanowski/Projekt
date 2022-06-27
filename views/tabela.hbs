@@ -1,77 +1,66 @@
 {{>header}}
 
-   <form method="POST" action="/kandydat">
-        <label for="namesurname">Imię i Nazwisko</label>
-        <input type="text" name="name" id="name">
+{{>add_candidate}}
 
-        <br>
+<body>
 
-        <label for="event">Wydarzenie</label>
-        <select name="event" id="wydarzenie">
-            <option value="puste">---</option>
-            <option value="frontend">FrontEnd-ReactJS</option>
-            <option value="backend">BackEnd-Node.js</option>
-            <option value="fullstack">FullStack-MERN</option>
-            <option value="tester">Tester Manualny</option>
-        </select>
+    <table border="3" style="width:100%;table-layout:fixed;">
+        <tr>
+            <th scope="col">
+                <font size="+2">Lp.</font>
+            </th>
+            <th scope="col">
+                <font size="+2">IMIĘ I NAZWISKO</font>
+            </th>
+            <th scope="col">
+                <font size="+2">WYDARZENIE</font>
+            </th>
+            <th scope="col">
+                <font size="+2">MIASTO</font>
+            </th>
+            <th scope="col">
+                <font size="+2">AKCJE</font>
+            </th>
+        </tr>
 
-        <label for="city">Miasto:</label>
-        <select name="city" id="city">
-            <option value="puste">---</option>
-            <option value="online">Online</option>
-            <option value="warszawa">Warszawa</option>
-            <option value="krakow">Kraków</option>
-        </select>
+    </table>
 
-        <br>
-        <button>ZAPISZ</button>
-    </form>
-   
- 
-      
-<table border="3" style="width:100%;table-layout:fixed;">
-    <tr>
-        <th scope="col">
-            <font size="+2">Lp.</font>
-        </th>
-        <th scope="col">
-            <font size="+2">IMIĘ I NAZWISKO</font>
-        </th>
-        <th scope="col">
-            <font size="+2">WYDARZENIE</font>
-        </th>
-        <th scope="col">
-            <font size="+2">MIASTO</font>
-        </th>
-        <th scope="col">
-            <font size="+2">AKCJE</font>
-        </th>
-    </tr>
-</table>
+    {{#each events}}
+    <table border="1" style="width:100%;table-layout:fixed;">
+        <tr style="text-align: center; ">
+            <td rowspan="6">
+                <p id="licznik">{{@index}}</p>
+            </td>
+            <td style="text-align: center;">
+                <font size="+3">{{name}}</font>
+            </td>
+            <td style="text-align: center;">
+                <font size="+3">{{event}}</font>
+            </td>
+            <td style="text-align: center;">
+                <font size="+3">{{city}}</font>
 
+            </td>
+            <td>
+                <form method="POST" action="/{{_id}}">
+                    <button>
+                        <font size="+1">USUŃ</font>
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </table>
+    {{/each}}
 
-{{#each events}}
-<table border="1" style="width:100%;table-layout:fixed;">
-    <tr style="text-align: center; ">
-        <td rowspan="6">
-            
-        </td>
-        <td style="text-align: center;">
-            <font size="+3">{{name}}</font>
-        </td>
-        <td style="text-align: center;">
-            <font size="+3">{{event}}</font>
-        </td>
-        <td style="text-align: center;">
-            <font size="+3">{{city}}</font>
-        </td>
-        <td >
-           <form method="POST" action="/kandydat/{{id}}">
-           <button><font size="+1">USUŃ</font></button>
-           </form> 
-        </td>
-    </tr>
-</table>
-{{/each}}
-
-
+    {{#unless name}}
+    <label>*Podaj imię i nazwisko!*</label>
+    {{/unless}}
+    {{#if ---}}
+    <label>*Podaj nazwę wydarzenia!*</label>
+    {{/if}}
+    {{#if ----}}
+    <label>*Podaj nazwę miasta!*</label>
+    {{/if}}
+    
+    <script src="projekt/licznik.js" async></script>
+</body>
