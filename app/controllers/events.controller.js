@@ -30,8 +30,7 @@ function postDelete(id, cb) {
             cb(null, event);
         }
     });
-}
-
+};
 
 module.exports = {
     list: postList,

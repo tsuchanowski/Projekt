@@ -2,65 +2,50 @@
 
 {{>add_candidate}}
 
-<body>
+<table border="3" style="width:100%;table-layout:fixed;">
+    <tr>
+        <th class="header" style="width:10%" scope="col">
+            Lp.
+        </th>
+        <th class="header" style="width:25%" scope="col">
+            IMIĘ I NAZWISKO
+        </th>
+        <th class="header" scope="col">
+            WYDARZENIE
+        </th>
+        <th class="header" scope="col">
+            MIASTO
+        </th>
+        <th class="header" style="width:18%" scope="col">
+            AKCJE
+        </th>
+    </tr>
+</table>
 
-    <table border="3" style="width:100%;table-layout:fixed;">
-        <tr>
-            <th scope="col">
-                <font size="+2">Lp.</font>
-            </th>
-            <th scope="col">
-                <font size="+2">IMIĘ I NAZWISKO</font>
-            </th>
-            <th scope="col">
-                <font size="+2">WYDARZENIE</font>
-            </th>
-            <th scope="col">
-                <font size="+2">MIASTO</font>
-            </th>
-            <th scope="col">
-                <font size="+2">AKCJE</font>
-            </th>
-        </tr>
+{{#each events}}
+<table border="1" style="width:100%;table-layout:fixed;">
+    <tr>
+        <td class="row" rowspan="6" style="width:10%">
+            {{inc @index}}
+        </td>
+        <td class="row" style="width:25%">
+            {{name}}
+        </td>
+        <td class="row">
+            {{event}}
+        </td>
+        <td class="row">
+            {{city}}
+        </td>
+        <td class="row" style="width:18%">
+            <form method="POST" action="/{{_id}}">
+                <button>
+                    USUŃ
+                </button>
+            </form>
+        </td>
+    </tr>
+</table>
+{{/each}}
 
-    </table>
-
-    {{#each events}}
-    <table border="1" style="width:100%;table-layout:fixed;">
-        <tr style="text-align: center; ">
-            <td rowspan="6">
-                <p id="licznik">{{@index}}</p>
-            </td>
-            <td style="text-align: center;">
-                <font size="+3">{{name}}</font>
-            </td>
-            <td style="text-align: center;">
-                <font size="+3">{{event}}</font>
-            </td>
-            <td style="text-align: center;">
-                <font size="+3">{{city}}</font>
-
-            </td>
-            <td>
-                <form method="POST" action="/{{_id}}">
-                    <button>
-                        <font size="+1">USUŃ</font>
-                    </button>
-                </form>
-            </td>
-        </tr>
-    </table>
-    {{/each}}
-
-    {{#unless name}}
-    <label>*Podaj imię i nazwisko!*</label>
-    {{/unless}}
-    {{#if ---}}
-    <label>*Podaj nazwę wydarzenia!*</label>
-    {{/if}}
-    {{#if ----}}
-    <label>*Podaj nazwę miasta!*</label>
-    {{/if}}
-    
-    <script src="projekt/licznik.js" async></script>
-</body>
+{{>footer}}

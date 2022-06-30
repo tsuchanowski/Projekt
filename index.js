@@ -1,16 +1,13 @@
 const express = require('express');
 const app = express();
 const hbs = require('express-handlebars');
-hbs.registerHelper("inc", function(value, options)
-{
-    return parseInt(value) + 1;
-});
+const post = require('./app/controllers/events.controller');
+
 app.use(express.static('public'));
 app.engine('hbs', hbs.engine({ defaultLayout: 'main', extname: '.hbs' }));
 app.set('view engine', 'hbs');
-
 app.use(express.urlencoded({ extended: true }));
-const post = require('./app/controllers/events.controller');
+
 
 app.get('/', function (req, res) {
 
@@ -18,29 +15,32 @@ app.get('/', function (req, res) {
         if (err) {
             res.send(err)
         }
-
-        res.render('tabela', { events });
+        res.render('tabela', {
+            events,
+            helpers: {
+                inc: function (value) {
+                    return parseInt(value) + 1;
+                }
+            },
+        }
+        );
     });
 });
 
-app.post('/', function (req, res, events) {
-    if (events.name == null) {
-        res.send('Uzupełnij pola formularza');
-    }
+app.post('/', function (req, res) {
 
-    else {
-        post.add(req.body, function (err) {
-            if (err) {
-                res.send(err)
-            }
-            res.redirect('/');
-        })
-    }
+    post.add(req.body, function (err) {
+        if (err) {
+            res.send(err)
+        }
+        res.redirect('/');
+    })
+
 });
 
 app.post('/:id', function (req, res) {
 
-    post.delete(req.params.id, function (err, events) {
+    post.delete(req.params.id, function (err) {
         if (err) res.send(err);
 
         res.redirect('/');
